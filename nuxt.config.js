@@ -31,7 +31,7 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ['@nuxtjs/axios', '@nuxtjs/proxy', '@nuxtjs/style-resources'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/style-resources'],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
@@ -46,6 +46,7 @@ export default {
   proxy: {
     '/api': {
       target: 'https://www.fastmock.site/mock/53df7119c852e65d94f26a08478f75e4',
+      pathRewrite: { '^/api/': '' },
     },
   },
   // 环境变量
