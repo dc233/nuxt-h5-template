@@ -1,64 +1,44 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">nuxt-h5-templatee</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-        <nuxt-link to="/login">登录页</nuxt-link>
-      </div>
-    </div>
-  </div>
+  <div id="dplayer"></div>
 </template>
 
 <script>
-export default {}
+export default {
+  layout: 'default',
+  mounted() {
+    // eslint-disable-next-line nuxt/no-env-in-hooks
+    if (process.client) {
+      const dp = new DPlayer({
+        container: document.getElementById('dplayer'),
+        // live: true,
+        // loop: false,
+        volume: 0.7,
+        video: {
+          url: 'http://static.smartisanos.cn/common/video/t1-ui.mp4',
+          pic:
+            'http://static.smartisanos.cn/pr/img/video/video_03_cc87ce5bdb.jpg',
+          // type: 'hls',
+        },
+        logo: 'http://www.jxxkt.com/pc/img/logo.png',
+        contextmenu: [
+          {
+            text: '此视屏版权',
+            link: 'https://github.com/DIYgod/DPlayer',
+          },
+        ],
+      })
+    }
+  },
+  methods: {},
+  head: {
+    script: [
+      {
+        src: 'https://cdn.jsdelivr.net/npm/hls.js@0.14.17/dist/hls.min.js',
+      },
+      {
+        src: 'https://cdn.jsdelivr.net/npm/dplayer@1.26.0/dist/DPlayer.min.js',
+      },
+    ],
+  },
+}
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

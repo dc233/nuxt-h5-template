@@ -14,10 +14,10 @@ export default {
     middleware: ['auth'],
   },
   // 全局 CSS (https://go.nuxtjs.dev/config-css)
-  css: ['@/assets/style/common.less'],
+  css: ['vant/lib/index.less'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/axios'],
+  plugins: ['~/plugins/axios', '~/plugins/vant-ui'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -33,8 +33,19 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: ['@nuxtjs/axios', '@nuxtjs/style-resources'],
 
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  // 构建配置
+  build: {
+    postcss: {
+      plugins: {
+        'postcss-px-to-viewport': {
+          viewportWidth: 750,
+          unitPrecision: 5,
+          propList: ['*', 'font-size'],
+          exclude: /(\/|\\)(node_modules)(\/|\\)/,
+        },
+      },
+    },
+  },
   // css 预处理器配置
   styleResources: {
     less: './assets/**/*.less',
@@ -55,4 +66,5 @@ export default {
   },
   // loading
   loading: false,
+  target: 'static',
 }

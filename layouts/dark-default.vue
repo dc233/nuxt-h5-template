@@ -1,12 +1,16 @@
 <template>
-  <div>
+  <div style="background-color: #35495e">
+    <div>
+      header
+      <p>
+        <button>light</button>
+        <button>dark</button>
+      </p>
+    </div>
     <Nuxt />
   </div>
 </template>
 
-<script>
-export default {}
-</script>
 <style>
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',

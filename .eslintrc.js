@@ -18,5 +18,8 @@ module.exports = {
   // add your custom rules here
   rules: {
     'no-console': 'off',
+    'no-empty-source': 'off',
+    'no-undef': 'off',
+    'no-unused-vars': 'off',
   },
 }
