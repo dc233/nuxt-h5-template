@@ -14,10 +14,16 @@ export default {
     middleware: ['auth'],
   },
   // 全局 CSS (https://go.nuxtjs.dev/config-css)
-  css: ['vant/lib/index.less'],
+  css: ['vant/lib/index.less', 'swiper/swiper.min.css'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/axios', '~/plugins/vant-ui'],
+  plugins: [
+    '~/plugins/axios',
+    '~/plugins/vant-ui',
+    { src: '~/plugins/dplay', ssr: false },
+    { src: '~/plugins/betterscroll', ssr: false },
+    { src: '~/plugins/vue-awesome-swiper', ssr: false },
+  ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -40,7 +46,7 @@ export default {
         'postcss-px-to-viewport': {
           viewportWidth: 750,
           unitPrecision: 5,
-          propList: ['*', 'font-size'],
+          propList: ['*', '!font*'],
           exclude: /(\/|\\)(node_modules)(\/|\\)/,
         },
       },
