@@ -23,21 +23,21 @@
         </van-row>
       </div>
     </client-only>
+    <ul class="coupon_b_name van-hairline--bottom">
+      <li
+        v-for="(item, index) in cardList"
+        :key="index"
+        :class="{ actived: index == isActiveIndex }"
+        @click="handlerClick(index)"
+      >
+        {{ item.title }}
+      </li>
+      <div class="zb-line" :style="[tabBarStyle]"></div>
+    </ul>
     <client-only>
-      <ul class="coupon_b_name van-hairline--bottom">
-        <li
-          v-for="(item, index) in cardList"
-          :key="index"
-          :class="{ actived: index == isActiveIndex }"
-          @click="handlerClick('cardChange', index)"
-        >
-          {{ item.title }}
-        </li>
-        <div class="zb-line"></div>
-      </ul>
       <swiper ref="mySwiper" :options="swiperOption">
         <!-- slides -->
-        <swiper-slide>I'm Slide 1</swiper-slide>
+        <swiper-slide> I'm Slide 1 I'm Slide 1 I'm Slide 1 </swiper-slide>
         <swiper-slide>I'm Slide 2</swiper-slide>
         <swiper-slide>I'm Slide 3</swiper-slide>
       </swiper>
@@ -55,6 +55,9 @@ export default {
         on: {
           slideChangeTransitionEnd(params) {
             _this.isActiveIndex = this.activeIndex
+            const ele = document.querySelector('.actived').offsetWidth
+            const move = ele * this.activeIndex + (ele - 50) / 2
+            _this.scrollBarLeft = move
           },
         },
       },
@@ -70,19 +73,43 @@ export default {
         },
       ],
       isActiveIndex: 0,
+      scrollBarLeft: 0,
     }
   },
   computed: {
+    // 移动tabr底部
+    tabBarStyle() {
+      const style = {
+        transform: `translate(${this.scrollBarLeft}px, -100%)`,
+        'transition-duration': '1s',
+      }
+      return style
+    },
     swiper() {
       return this.$refs.mySwiper.$swiper
     },
   },
+  mounted() {
+    // eslint-disable-next-line nuxt/no-env-in-hooks
+    if (process.browser) {
+      this.$nextTick(() => {
+        this.tabrinit()
+      })
+    }
+  },
   methods: {
-    handlerClick(action, data) {
-      if (action === 'cardChange') {
-        this.isActiveIndex = data
-        this.swiper.slideTo(this.isActiveIndex)
-      }
+    handlerClick(data) {
+      this.isActiveIndex = data
+      this.swiper.slideTo(this.isActiveIndex)
+      const ele = document.querySelector('.actived').offsetWidth
+      const move = ele * data + (ele - 50) / 2
+      this.scrollBarLeft = move
+    },
+    // 计算初始化的tabr的移动距离
+    tabrinit() {
+      const ele = document.querySelector('.actived')
+      const movewidth = (ele.offsetWidth - 50) / 2
+      this.scrollBarLeft = movewidth
     },
   },
 }
@@ -94,6 +121,7 @@ export default {
   background-color: #fff;
 }
 .coupon_b_name {
+  position: relative;
   display: flex;
   justify-content: space-between;
   padding: 20px 0;
@@ -102,7 +130,20 @@ export default {
     position: relative;
     flex: 1;
     text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
+}
+.zb-line {
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  bottom: 2px;
+  z-index: 1;
+  left: 0;
+  background-color: #faad14;
+  overflow: hidden;
 }
 .actived {
   color: #faad14;

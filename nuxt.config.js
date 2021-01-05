@@ -46,6 +46,7 @@ export default {
         'postcss-px-to-viewport': {
           viewportWidth: 750,
           unitPrecision: 5,
+          selectorBlackList: ['zb'],
           propList: ['*', '!font*'],
           exclude: /(\/|\\)(node_modules)(\/|\\)/,
         },
